@@ -1,0 +1,9 @@
+<html>
+  <p>redirecting...</p>
+  <script>
+  let accessFrom = window.location.search.replace('?', '').split('=')[1] // とりあえず一つしかクエリパラメータこない想定
+  if (!document.cookie.match(accessFrom)) {
+    window.location.replace('http://ed46eb4e4631.ngrok.io/setcookie.html')
+  }
+  </script>
+</html>

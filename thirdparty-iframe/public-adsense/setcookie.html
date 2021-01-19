@@ -1,0 +1,6 @@
+<html>
+  <p>setting cookie!</p>
+  <script>document.cookie = `${(new URL(document.referrer).searchParams.get('origin'))}=didAccess`</script>
+  <script>window.alert('no cookie found. setting new cookie!')</script>
+  <script>window.location.replace(document.referrer)</script>
+</html>
