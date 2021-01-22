@@ -3,7 +3,8 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fix": "eslint --fix"
   },
   "dependencies": {
     "@types/jest": "^26.0.15",
