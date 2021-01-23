@@ -1,18 +1,22 @@
 import { NameApiService } from "./nameApiService";
 import { DatabaseMock } from "./util";
 
-export const sumOfArray = (numbers: number[]): number => {
+// https://qiita.com/uhyo/items/80ce7c00f413c1d1be56
+type numbersType = [number, number, ...number[]];
+
+//export const sumOfArray = (numbers: number[]): number => {
+export const sumOfArray = (numbers: numbersType): number => {
   return numbers.reduce((a: number, b: number): number => a + b);
 };
 
-export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
+export const asyncSumOfArray = (numbers: numbersType): Promise<number> => {
   return new Promise((resolve): void => {
     resolve(sumOfArray(numbers));
   });
 };
 
 export const asyncSumOfArraySometimesZero = (
-  numbers: number[]
+  numbers: numbersType
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
