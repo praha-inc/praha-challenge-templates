@@ -8,12 +8,10 @@ import { DatabaseMock } from "../util";
 import { NameApiService } from "../nameApiService";
 
 test("sumOfArrayのテスト", () => {
+  // expect(sumOfArray([0])).toBe(1); // 型で弾かれる
+  // expect(sumOfArray([1])).toBe(1); // 型で弾かれる
+  expect(sumOfArray([1, 2])).toBe(3);
   expect(sumOfArray([1, 2, 3])).toBe(6);
-  /*
-    expect(() => {
-    sumOfArray([]);
-  }).toThrow();
-   */
 });
 
 test("asyncSumOfArrayのテスト", async () => {
