@@ -6,6 +6,7 @@ export class DatabaseMock {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public save(_: number[]): void {
     // memo: 課題のために、あえて時々saveが失敗するようにしている
+    console.log("_",_)
     if (getRandomInt(10) < 2) {
       throw new Error("fail!");
     }
