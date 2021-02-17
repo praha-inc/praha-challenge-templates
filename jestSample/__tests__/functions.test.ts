@@ -32,7 +32,7 @@ describe("#asyncSumOfArraySometimesZero", () => {
 
 // describe("#getFirstNameThrowIfLong", () => {
 //   test("[1,2]を渡すと3が返ってくる && mockdatabaseに保存できる", () => {
-//     getFirstNameThrowIfLong([1.2]).then((result) => {
+//     getFirstNameThrowIfLong(1).then((result) => {
 //       expect(result).toBe(3)
 //     })
 //   })
