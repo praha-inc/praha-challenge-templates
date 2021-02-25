@@ -31,10 +31,9 @@
 [完成イメージ](./output_images/latest_order.png)
 
 ### NULLの扱いに慣れる
-[完成イメージ](./output_images/employee_not_shown.png)
-[完成イメージ](./output_images/employee_null.png)
+[完成イメージ](./output_images/customers_with_name.png)
+[完成イメージ](./output_images/customer_without_name.png)
 
 ### JOINの扱いになれる
-
 [完成イメージ](./output_images/employee_not_shown.png)
 [完成イメージ](./output_images/employee_null.png)
