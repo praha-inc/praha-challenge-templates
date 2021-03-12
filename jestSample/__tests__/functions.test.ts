@@ -1,7 +1,8 @@
 // todo: ここに単体テストを書いてみましょう！
 
 import { NameApiService } from "../nameApiService";
-import { sumOfArray,asyncSumOfArray,getFirstNameThrowIfLong } from "../functions"
+import { DatabaseMock } from "../util"
+import { sumOfArray,asyncSumOfArray,asyncSumOfArraySometimesZero,getFirstNameThrowIfLong } from "../functions"
 
 describe("#sumOfArray", () => {
   test("[1,2]を渡すと3が返ってくる", () => {
@@ -17,18 +18,30 @@ describe("#asyncSumOfArray", () => {
   })
 })
 
-// describe("#asyncSumOfArraySometimesZero", () => {
-//   test("[1,2]を渡すと3が返ってくる && mockdatabaseに保存できる", () => {
-//     asyncSumOfArraySometimesZero([1,2]).then((result) => {
-//       expect(result).toBe(3)
-//     })
-//   })
-//   test("[1,2]を渡し、mockdatabaseが例外を投げる", () => {
-//     asyncSumOfArraySometimesZero([1,2]).then((result) => {
-//       expect(result).rejects.toBe(0);
-//     })
-//   })
-// })
+const mockSave = jest.fn((errorFlag: boolean) => {
+  if (errorFlag) {
+    return console.log("aaa")
+  }
+  throw new Error("fail!")
+});
+jest.mock('../nameApiService',() => {
+  return { DatabaseMock: jest.fn().mockImplementation(() => {
+    return {save :mockSave}
+  })}
+})
+
+describe("#asyncSumOfArraySometimesZero", () => {
+  test("[1,2]を渡すと3が返ってくる && mockdatabaseに保存できる", () => {
+    asyncSumOfArraySometimesZero([1,2], new DatabaseMock()).then((result) => {      
+      expect(result).toBe(3)
+    })
+  })
+  test("[1,2]を渡し、mockdatabaseが例外を投げる", () => {
+    asyncSumOfArraySometimesZero([], new DatabaseMock()).then((result) => {
+      expect(result).rejects.toBe(0);
+    })
+  })
+})
 
 const mockGetFirstName = jest.fn();
 mockGetFirstName.mockReturnValue("testname")
