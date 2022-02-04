@@ -2,7 +2,11 @@ import { NameApiService } from "./nameApiService";
 import { DatabaseMock } from "./util";
 
 export const sumOfArray = (numbers: number[]): number => {
-  return numbers.reduce((a: number, b: number): number => a + b);
+  if (!numbers.length) {
+    return 0;
+  } else {
+    return numbers.reduce((a: number, b: number): number => a + b);
+  }
 };
 
 export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
@@ -11,12 +15,14 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
   });
 };
 
+const database = new DatabaseMock(); // fixme: この関数をテストするには、DatabaseMockの使い方を変える必要がありそう！ヒント：依存性の注入   
+
 export const asyncSumOfArraySometimesZero = (
-  numbers: number[]
+  numbers: number[], database: any
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
-      const database = new DatabaseMock(); // fixme: この関数をテストするには、DatabaseMockの使い方を変える必要がありそう！ヒント：依存性の注入
+      //const database = new DatabaseMock(); // fixme: この関数をテストするには、DatabaseMockの使い方を変える必要がありそう！ヒント：依存性の注入
       database.save(numbers);
       resolve(sumOfArray(numbers));
     } catch (error) {
