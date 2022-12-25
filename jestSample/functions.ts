@@ -1,5 +1,5 @@
 import { NameApiService } from "./nameApiService";
-import { Database, DatabaseMock } from "./util";
+import { Database } from "./util";
 
 export const sumOfArray = (numbers: number[]): number => {
   return numbers.reduce((a: number, b: number): number => a + b);
@@ -13,7 +13,7 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
 
 export const asyncSumOfArraySometimesZero = (
   numbers: number[],
-  database: Database = new DatabaseMock() // fixme: 実際の開発だと DI コンテナ使うかも
+  database: Database // fixme: 実際の開発だと DI コンテナ使うかも
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
@@ -27,7 +27,7 @@ export const asyncSumOfArraySometimesZero = (
 
 export const getFirstNameThrowIfLong = async (
   maxNameLength: number,
-  nameApiService: NameApiService = new NameApiService()
+  nameApiService: NameApiService
 ): Promise<string> => {
   const firstName = await nameApiService.getFirstName();
 
