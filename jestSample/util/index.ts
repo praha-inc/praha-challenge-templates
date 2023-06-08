@@ -2,12 +2,19 @@ const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-export class DatabaseMock {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface BaseDatabase {
+  save(numbers: number[]): void;
+}
+
+export class Database implements BaseDatabase {
   public save(_: number[]): void {
-    // memo: 課題のために、あえて時々saveが失敗するようにしている
-    if (getRandomInt(10) < 2) {
-      throw new Error("fail!");
-    }
+    // DB保存処理を実装
+  }
+}
+
+export class DatabaseMock implements BaseDatabase {
+  public saveCallback!: () => void;
+  public save(_: number[]): void {
+    this.saveCallback();
   }
 }
