@@ -1,8 +1,9 @@
 import axios from "axios";
+import { NameApiBase } from "./nameApiBase";
 
-export class NameApiService {
+export class NameApiService implements NameApiBase {
   private MAX_LENGTH = 4;
-  public constructor() {}
+  public constructor() { }
 
   public async getFirstName(): Promise<string> {
     const { data } = await axios.get(
