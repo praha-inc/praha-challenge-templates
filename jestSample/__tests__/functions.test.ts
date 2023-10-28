@@ -1,7 +1,9 @@
-import { sumOfArray, asyncSumOfArray, asyncSumOfArraySometimesZero, } from "../functions";
+import { sumOfArray, asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, } from "../functions";
+import { NameApiService } from "../nameApiService";
 import { DatabaseMock } from "../util/index";
 
 jest.mock('../util/index');
+jest.mock('../nameApiService.ts');
 
 // todo: ここに単体テストを書いてみましょう！
 describe('sum of array tests', () => {
@@ -67,3 +69,33 @@ describe('async sum of array sometimes zero', () => {
     });
 });
 
+describe('get firstname throw if long', () => {
+    test('firstName length is less maxNameLength', async () => {
+        const maxNameLength = 4;
+        const nameApiService = new NameApiService();
+        const spy = jest.spyOn(nameApiService, 'getFirstName').mockResolvedValue('Sam');
+        const result = await getFirstNameThrowIfLong(nameApiService, maxNameLength);
+        expect(spy).toHaveBeenCalled();
+        expect(result).toBe('Sam');
+        spy.mockRestore();
+    });
+
+    test('firstName length is same as maxNameLength', async () => {
+        const maxNameLength = 4;
+        const nameApiService = new NameApiService();
+        const spy = jest.spyOn(nameApiService, 'getFirstName').mockResolvedValue('John');
+        const result = await getFirstNameThrowIfLong(nameApiService, maxNameLength);
+        expect(spy).toHaveBeenCalled();
+        expect(result).toBe('John');
+        spy.mockRestore();
+    });
+
+    test('firstName length is same as maxNameLength', async () => {
+        const maxNameLength = 4;
+        const nameApiService = new NameApiService();
+        const spy = jest.spyOn(nameApiService, 'getFirstName').mockResolvedValue('Steve');
+        await expect(getFirstNameThrowIfLong(nameApiService, maxNameLength)).rejects.toThrow();
+        expect(spy).toHaveBeenCalled();
+        spy.mockRestore();
+    });
+});
