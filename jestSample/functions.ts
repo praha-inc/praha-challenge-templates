@@ -1,5 +1,5 @@
 import { NameApiService } from "./nameApiService";
-import { Database } from "./util";
+import { DatabaseMock } from "./util";
 
 export const sumOfArray = (numbers: number[]): number => {
   return numbers.reduce((a: number, b: number): number => a + b);
@@ -12,7 +12,7 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
 };
 
 export const asyncSumOfArraySometimesZero = (
-  database: Database, numbers: number[]
+  database: DatabaseMock, numbers: number[]
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
