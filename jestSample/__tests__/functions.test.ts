@@ -1,9 +1,10 @@
+import axios from 'axios';
 import { sumOfArray, asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, } from "../functions";
 import { NameApiService } from "../nameApiService";
 import { DatabaseMock } from "../util/index";
 
 jest.mock('../util/index');
-jest.mock('../nameApiService.ts');
+jest.mock('axios')
 
 // todo: ここに単体テストを書いてみましょう！
 describe('sum of array tests', () => {
@@ -97,5 +98,34 @@ describe('get firstname throw if long', () => {
         await expect(getFirstNameThrowIfLong(nameApiService, maxNameLength)).rejects.toThrow();
         expect(spy).toHaveBeenCalled();
         spy.mockRestore();
+    });
+});
+
+describe('test nameApiService', () => {
+    test('firstName length is less than maxNameLength', async ()=>{
+        const maxNameLength = 4;
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.get.mockResolvedValue({data:{first_name: "Sam"}});
+        const nameApiService = new NameApiService();
+        await expect(nameApiService.getFirstName(maxNameLength)).resolves.toBe("Sam");
+        expect(mockedAxios.get).toHaveBeenCalled();
+    });
+
+    test('firstName length is equal to maxNameLength', async ()=>{
+        const maxNameLength = 4;
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.get.mockResolvedValue({data:{first_name: "John"}});
+        const nameApiService = new NameApiService();
+        await expect(nameApiService.getFirstName(maxNameLength)).resolves.toBe("John");
+        expect(mockedAxios.get).toHaveBeenCalled();
+    });
+
+    test('firstName length is greater to maxNameLength', async ()=>{
+        const maxNameLength = 4;
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.get.mockResolvedValue({data:{first_name: "Steve"}});
+        const nameApiService = new NameApiService();
+        await expect(nameApiService.getFirstName(maxNameLength)).rejects.toThrow();
+        expect(mockedAxios.get).toHaveBeenCalled();
     });
 });
