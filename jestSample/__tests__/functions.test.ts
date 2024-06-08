@@ -1,4 +1,5 @@
-import { asyncSumOfArray, sumOfArray } from "../functions";
+import { asyncSumOfArray, asyncSumOfArraySometimesZero, sumOfArray } from "../functions";
+import { DatabaseFailureMock, DatabaseSuccessMock } from "../util";
 
 const VERY_LONG_ARRAY = Array.from({ length: 50 }, (_, i) => i + 1);
 
@@ -151,5 +152,21 @@ describe("asyncSumOfArray", (): void => {
       expect(() => asyncSumOfArray(argument)).rejects.toThrow(TypeError);
     }
     );
+  });
+});
+
+describe("asyncSumOfArraySometimesZero", (): void => {
+  it("データベースの保存が失敗した場合、0が返却される", (): void => {
+    expect(asyncSumOfArraySometimesZero({
+      database: DatabaseFailureMock,
+      numbers: [1, 2, 3],
+    })).resolves.toBe(0);
+  });
+
+  it("データベースの保存に成功したとき、asyncSumOfArrayの合計値が返却される", (): void => {
+    expect(asyncSumOfArraySometimesZero({
+      database: DatabaseSuccessMock,
+      numbers: [1, 2, 3],
+    })).resolves.toBe(6);
   });
 });
