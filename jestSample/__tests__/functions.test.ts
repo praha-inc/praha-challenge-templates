@@ -1,4 +1,5 @@
-import { asyncSumOfArray, asyncSumOfArraySometimesZero, sumOfArray } from "../functions";
+import { asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, sumOfArray } from "../functions";
+import { NameApiServiceMock } from "../nameApiService";
 import { DatabaseFailureMock, DatabaseSuccessMock } from "../util";
 
 const VERY_LONG_ARRAY = Array.from({ length: 50 }, (_, i) => i + 1);
@@ -168,5 +169,25 @@ describe("asyncSumOfArraySometimesZero", (): void => {
       database: DatabaseSuccessMock,
       numbers: [1, 2, 3],
     })).resolves.toBe(6);
+  });
+});
+
+describe("getFirstNameThrowIfLong", (): void => {
+  describe("getFirstNameがmockedName(10文字)を返す場合", (): void => {
+    it("maxNameLengthを10で指定するとfirstNameが返却される", (): void => {
+      expect(getFirstNameThrowIfLong({
+        maxNameLength: 10,
+        nameApiService: NameApiServiceMock,
+      })).resolves.toBe("mockedName");
+    });
+  });
+
+  describe("getFirstNameがmockedName(10文字)を返す場合、", (): void => {
+    it("maxNameLengthを10未満で指定するとエラーになる", (): void => {
+      expect(getFirstNameThrowIfLong({
+        maxNameLength: 9,
+        nameApiService: NameApiServiceMock,
+      })).rejects.toThrow();
+    });
   });
 });
