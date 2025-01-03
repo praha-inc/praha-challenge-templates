@@ -42,12 +42,20 @@ test('空の配列を渡したら、実行時にエラー発生', async() => {
 //// #課題2-2
 // asyncSumOfArraySometimesZero
 test('[1,1]を渡したときにエラーが発生したら0を返す', async() => {
-    const databaseMock = {
+    const databaseMock1 = {
         save: jest.fn(() => {
             throw new Error("Database error")
         }),
     }
-    expect(asyncSumOfArraySometimesZero(databaseMock as unknown as DatabaseMock, [1, 1])).resolves.toBe(0);
+
+    const databaseMock2 = {
+        save: jest.fn(() => {
+            return
+        }),
+    }
+
+    expect(asyncSumOfArraySometimesZero(databaseMock1 as unknown as DatabaseMock, [1, 1])).resolves.toBe(0);
+    expect(asyncSumOfArraySometimesZero(databaseMock2 as unknown as DatabaseMock, [1, 1])).resolves.toBe(2);
 });
 
 // getFirstNameThrowIfLong
@@ -72,9 +80,7 @@ test('John というレスポンスの場合、名前をそのまま返す', asy
     const mockResponse = {data: { first_name: "John" }}
     mockedAxios.get.mockResolvedValue(mockResponse);
 
-    const result = await nameApiService.getFirstName();
-
-    expect(result).toBe("John");
+    expect(await getFirstNameThrowIfLong(nameApiService, 4)).toBe("John");
 });
 
 
