@@ -92,7 +92,7 @@ test("取得したfirstNameが文字数制限を超えていたら例外を発�
 
 test("firstNameが取得できなかったら例外を発生させる", async () => {
   class NameApiMockError implements NameServiceInterface {
-    getFirstName(): string {
+    getFirstName(): never {
       throw new Error("first_name too long");
     }
   }
