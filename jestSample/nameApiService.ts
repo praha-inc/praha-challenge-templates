@@ -14,11 +14,8 @@ class FetchDataWithApi implements FetchInterface {
 
 export class NameApiService {
   private MAX_LENGTH = 4;
-  private fetchService: FetchInterface
 
-  public constructor(fetchService: FetchInterface) {
-    this.fetchService = fetchService;
-  }
+  constructor(private fetchService: FetchInterface) {}
 
   public async getFirstName(): Promise<string> {
     const { data } = await this.fetchService.getData();
