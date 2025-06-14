@@ -11,13 +11,13 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
   });
 };
 
-export interface DatabaseInterface {
+export interface Database {
   save(_: number[]): void
 }
 
 export const asyncSumOfArraySometimesZero = (
   numbers: number[],
-  database: DatabaseInterface
+  database: Database
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
@@ -29,13 +29,13 @@ export const asyncSumOfArraySometimesZero = (
   });
 };
 
-export interface NameServiceInterface {
+export interface NameService {
   getFirstName(): string
 }
 
 export const getFirstNameThrowIfLong = async (
   maxNameLength: number,
-  nameApiService: NameServiceInterface
+  nameApiService: NameService
 ): Promise<string> => {
   const firstName = await nameApiService.getFirstName();
 

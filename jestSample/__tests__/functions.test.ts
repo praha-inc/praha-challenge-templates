@@ -1,4 +1,4 @@
-import { sumOfArray, asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, DatabaseInterface, NameServiceInterface } from "../functions";
+import { sumOfArray, asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, Database, NameService } from "../functions";
 
 // 課題2-1
 // sumOfArray
@@ -52,14 +52,14 @@ test("空の配列を渡すとTypeErrorが発生する", async () => {
 // 課題2-2
 // asyncSumOfArraySometimesZero
 test("データベースへの保存が成功すると合計値を返す", async () => {
-  class DatabaseMockSuccess implements DatabaseInterface {
+  class DatabaseMockSuccess implements Database {
     save(_: number[]): void {}
   }
   expect(await asyncSumOfArraySometimesZero([1, 1], new DatabaseMockSuccess())).toBe(2);
 });
 
 test("データベースへの保存が失敗すると0を返す", async () => {
-  class DatabaseMockFailure implements DatabaseInterface {
+  class DatabaseMockFailure implements Database {
     save(_: number[]): void {
       throw new Error("fail!");
     }
@@ -69,7 +69,7 @@ test("データベースへの保存が失敗すると0を返す", async () => {
 
 // getFirstNameThrowIfLong
 test("取得したfirstNameが文字数制限以下だったらその値を返す", async () => {
-  class NameApiMockFourCharacter implements NameServiceInterface {
+  class NameApiMockFourCharacter implements NameService {
     getFirstName(): string {
       return "Taro"
     }
@@ -80,7 +80,7 @@ test("取得したfirstNameが文字数制限以下だったらその値を返�
 });
 
 test("取得したfirstNameが文字数制限を超えていたら例外を発生させる", async () => {
-  class NameApiMockFiveCharacter implements NameServiceInterface {
+  class NameApiMockFiveCharacter implements NameService {
     getFirstName(): string {
       return "Alice"
     }
@@ -91,7 +91,7 @@ test("取得したfirstNameが文字数制限を超えていたら例外を発�
 });
 
 test("firstNameが取得できなかったら例外を発生させる", async () => {
-  class NameApiMockError implements NameServiceInterface {
+  class NameApiMockError implements NameService {
     getFirstName(): never {
       throw new Error("first_name too long");
     }

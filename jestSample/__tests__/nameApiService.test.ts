@@ -1,8 +1,8 @@
-import { FetchInterface, NameApiService } from "../nameApiService";
+import { DataFetcher, NameApiService } from "../nameApiService";
 
 // 課題2-3
 test("取得したfirstNameが4文字以下だったらその値を返す", async () => {
-  class FetchDataMockFourCharacter implements FetchInterface {
+  class FetchDataMockFourCharacter implements DataFetcher {
     getData(): any {
       return {
         data: {
@@ -17,7 +17,7 @@ test("取得したfirstNameが4文字以下だったらその値を返す", asyn
 });
 
 test("取得したfirstNameが5文字以上だったら例外を発生させる", async () => {
-  class FetchDataMockFiveCharacter implements FetchInterface {
+  class FetchDataMockFiveCharacter implements DataFetcher {
     getData(): any {
       return {
         data: {

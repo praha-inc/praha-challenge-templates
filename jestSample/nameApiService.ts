@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export interface FetchInterface {
+export interface DataFetcher {
   getData(): Promise<any>;
 }
 
-class FetchDataWithApi implements FetchInterface {
+class ApiDataFetcher implements DataFetcher {
   async getData(): Promise<any> {
     return await axios.get(
       "https://random-data-api.com/api/name/random_name"
@@ -15,7 +15,7 @@ class FetchDataWithApi implements FetchInterface {
 export class NameApiService {
   private MAX_LENGTH = 4;
 
-  constructor(private fetchService: FetchInterface) {}
+  constructor(private fetchService: DataFetcher) {}
 
   public async getFirstName(): Promise<string> {
     const { data } = await this.fetchService.getData();
