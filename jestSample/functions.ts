@@ -30,7 +30,7 @@ export const asyncSumOfArraySometimesZero = (
 };
 
 export interface NameService {
-  getFirstName(): string
+  getFirstName(): Promise<string>
 }
 
 export const getFirstNameThrowIfLong = async (

@@ -70,7 +70,7 @@ test("データベースへの保存が失敗すると0を返す", async () => {
 // getFirstNameThrowIfLong
 test("取得したfirstNameが文字数制限以下だったらその値を返す", async () => {
   class NameApiMockFourCharacter implements NameService {
-    getFirstName(): string {
+    async getFirstName(): Promise<string> {
       return "Taro"
     }
   }
@@ -81,7 +81,7 @@ test("取得したfirstNameが文字数制限以下だったらその値を返�
 
 test("取得したfirstNameが文字数制限を超えていたら例外を発生させる", async () => {
   class NameApiMockFiveCharacter implements NameService {
-    getFirstName(): string {
+    async getFirstName(): Promise<string> {
       return "Alice"
     }
   }
