@@ -11,12 +11,16 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
   });
 };
 
+export interface Database {
+  save(_: number[]): void
+}
+
 export const asyncSumOfArraySometimesZero = (
-  numbers: number[]
+  numbers: number[],
+  database: Database
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
-      const database = new DatabaseMock(); // fixme: この関数をテストするには、DatabaseMockの使い方を変える必要がありそう！ヒント：依存性の注入
       database.save(numbers);
       resolve(sumOfArray(numbers));
     } catch (error) {
@@ -25,10 +29,14 @@ export const asyncSumOfArraySometimesZero = (
   });
 };
 
+export interface NameService {
+  getFirstName(): Promise<string>
+}
+
 export const getFirstNameThrowIfLong = async (
-  maxNameLength: number
+  maxNameLength: number,
+  nameApiService: NameService
 ): Promise<string> => {
-  const nameApiService = new NameApiService(); // fixme: この関数をテストするには、NameApiServiceの使い方を変える必要がありそう！ヒント：依存性の注入
   const firstName = await nameApiService.getFirstName();
 
   if (firstName.length > maxNameLength) {
