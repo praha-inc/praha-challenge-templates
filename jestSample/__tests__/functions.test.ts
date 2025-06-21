@@ -1,4 +1,5 @@
-import { asyncSumOfArray, sumOfArray } from "../functions";
+import { asyncSumOfArray, asyncSumOfArraySometimesZero, getFirstNameThrowIfLong, sumOfArray } from "../functions";
+import { NameApiService } from "../nameApiService";
 
 describe('sumOfArray', () => {
     it("整数を渡すと合計を返す", () => {
@@ -37,3 +38,42 @@ describe('asyncSumOfArray', () => {
     //     }).toThrow("Invalid argument: numbers must be an array of numbers");
     // })
 })
+
+describe('asyncSumOfArraySometimesZero', () => {
+    it("整数を渡すと合計を返す", async () => {
+        const mockDatabase = {
+            save: jest.fn(),
+        };
+        const result = await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase);
+        expect(mockDatabase.save).toHaveBeenCalledWith([1, 2, 3, 4, 5]);
+    });
+
+    it("saveが失敗した場合は0を返す", async () => {
+        const mockDatabase = {
+            save: jest.fn(() => {
+                throw new Error("fail!");
+            }),
+        };
+        const result = await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase);
+        expect(result).toBe(0);
+    });
+})
+
+describe('getFirstNameThrowIfLong', () => {
+    it("first_nameが指定の長さ以下ならそのまま返す", async () => {
+    class MockNameApiService extends NameApiService {
+        getFirstName = jest.fn().mockResolvedValue("Johnathan");
+    }
+    const mockNameApiService = new MockNameApiService();
+        const result = await getFirstNameThrowIfLong(4, mockNameApiService);
+        expect(result).toBe("John");
+    });
+
+    it("first_nameが指定の長さを超える場合はエラーを投げる", async () => {
+        class MockNameApiService extends NameApiService {
+            getFirstName = jest.fn().mockResolvedValue("Johnathan");
+        }
+        const mockNameApiService = new MockNameApiService();
+        await expect(getFirstNameThrowIfLong(4, mockNameApiService)).rejects.toThrow("first_name too long");
+    });
+});
