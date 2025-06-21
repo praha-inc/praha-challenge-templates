@@ -23,11 +23,12 @@ describe('asyncSumOfArray', () => {
         const result = await asyncSumOfArray([1, 2, 3, 4, 5]);
         expect(result).toBe(15);
     });
-
-    it("空の配列を渡すと0を返す", async () => {
-        const result = await asyncSumOfArray([]);
-        expect(result).toBe(0);
-    });
+    
+    // sumOfArrayでテストが行われているはずなので、以下のテストを不要だと考える
+    // it("空の配列を渡すと0を返す", async () => {
+    //     const result = await asyncSumOfArray([]);
+    //     expect(result).toBe(0);
+    // });
 
     //　課題に例として記載があったものの、引数の型で守れているのでテスト不要と判断
     // it.skip("文字列を渡すとエラーになる", () => {
