@@ -44,8 +44,7 @@ describe('asyncSumOfArraySometimesZero', () => {
         const mockDatabase = {
             save: jest.fn(),
         };
-        const result = await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase);
-        expect(mockDatabase.save).toHaveBeenCalledWith([1, 2, 3, 4, 5]);
+        expect(await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase)).toBe(15);
     });
 
     it("saveが失敗した場合は0を返す", async () => {
@@ -54,8 +53,7 @@ describe('asyncSumOfArraySometimesZero', () => {
                 throw new Error("fail!");
             }),
         };
-        const result = await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase);
-        expect(result).toBe(0);
+        expect(await asyncSumOfArraySometimesZero([1, 2, 3, 4, 5], mockDatabase)).toBe(0);
     });
 })
 
@@ -65,8 +63,7 @@ describe('getFirstNameThrowIfLong', () => {
         getFirstName = jest.fn().mockResolvedValue("John");
     }
     const mockNameApiService = new MockNameApiService();
-        const result = await getFirstNameThrowIfLong(4, mockNameApiService);
-        expect(result).toBe("John");
+        expect(await getFirstNameThrowIfLong(4, mockNameApiService)).toBe("John");
     });
 
     it("first_nameが指定の長さを超える場合はエラーを投げる", async () => {
