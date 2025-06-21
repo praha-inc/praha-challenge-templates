@@ -62,7 +62,7 @@ describe('asyncSumOfArraySometimesZero', () => {
 describe('getFirstNameThrowIfLong', () => {
     it("first_nameが指定の長さ以下ならそのまま返す", async () => {
     class MockNameApiService extends NameApiService {
-        getFirstName = jest.fn().mockResolvedValue("Johnathan");
+        getFirstName = jest.fn().mockResolvedValue("John");
     }
     const mockNameApiService = new MockNameApiService();
         const result = await getFirstNameThrowIfLong(4, mockNameApiService);
@@ -71,9 +71,9 @@ describe('getFirstNameThrowIfLong', () => {
 
     it("first_nameが指定の長さを超える場合はエラーを投げる", async () => {
         class MockNameApiService extends NameApiService {
-            getFirstName = jest.fn().mockResolvedValue("Johnathan");
+            getFirstName = jest.fn().mockResolvedValue("John");
         }
         const mockNameApiService = new MockNameApiService();
-        await expect(getFirstNameThrowIfLong(4, mockNameApiService)).rejects.toThrow("first_name too long");
+        await expect(getFirstNameThrowIfLong(3, mockNameApiService)).rejects.toThrow("first_name too long");
     });
 });
