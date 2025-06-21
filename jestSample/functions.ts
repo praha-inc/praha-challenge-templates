@@ -2,7 +2,7 @@ import { NameApiService } from "./nameApiService";
 import { DatabaseMock } from "./util";
 
 export const sumOfArray = (numbers: number[]): number => {
-  return numbers.reduce((a: number, b: number): number => a + b);
+  return numbers.reduce((a: number, b: number): number => a + b, 0);
 };
 
 export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
@@ -36,3 +36,6 @@ export const getFirstNameThrowIfLong = async (
   }
   return firstName;
 };
+
+// tsconfig.jsonのcompilerOptionsに以下を追加
+// "lib": ["es2015", "dom"]
