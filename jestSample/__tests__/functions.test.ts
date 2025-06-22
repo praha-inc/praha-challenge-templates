@@ -18,8 +18,8 @@ test("複数の0の要素を持つ配列を渡すと要素の値を返す", () =
   expect(sumOfArray([0, 0])).toBe(0);
 });
 
-test("空の配列を渡すとTypeErrorが発生する", () => {
-  expect(() => sumOfArray([])).toThrow(TypeError);
+test("空の配列を渡すと0を返す", () => {
+  expect(sumOfArray([])).toBe(0);
 });
 
 // ビルドもテストも失敗するので、テストすべきでない
@@ -44,8 +44,8 @@ test("複数の0の要素を持つ配列を渡すと要素の値を返す", asyn
   expect(await asyncSumOfArray([0, 0])).toBe(0);
 });
 
-test("空の配列を渡すとTypeErrorが発生する", async () => {
-  await expect(asyncSumOfArray([])).rejects.toThrow(TypeError);
+test("空の配列を渡すと0を返す", async () => {
+  expect(await asyncSumOfArray([])).toBe(0);
 });
 
 
