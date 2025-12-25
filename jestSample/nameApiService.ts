@@ -6,9 +6,10 @@ export class NameApiService {
 
   public async getFirstName(): Promise<string> {
     const { data } = await axios.get(
-      "https://random-data-api.com/api/name/random_name"
+      "https://randomuser.me/api/"
     );
-    const firstName = data.first_name as string;
+
+    const firstName = data.results[0].name.first as string;
 
     if (firstName.length > this.MAX_LENGTH) {
       throw new Error("firstName is too long!");
